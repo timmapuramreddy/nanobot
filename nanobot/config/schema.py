@@ -337,3 +337,9 @@ class Config(BaseSettings):
         return None
 
     model_config = ConfigDict(env_prefix="NANOBOT_", env_nested_delimiter="__")
+
+    @classmethod
+    def settings_customise_sources(cls, settings_cls, init_settings, env_settings,
+                                   dotenv_settings, file_secret_settings):
+        """Env vars override init (file) values — standard for Docker / 12-factor apps."""
+        return env_settings, init_settings, dotenv_settings, file_secret_settings
